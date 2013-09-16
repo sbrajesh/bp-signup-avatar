@@ -5,9 +5,10 @@
  * Plugin URI: http://buddydev.com/plugins/bp-signup-avatar/
  * Version: 1.0
  * Author: Brajesh Singh
- * Author URI: http://buddydev.com/members/sbrajesh
+ * Author URI: http://buddydev.com/
+ * License: GPL
  * 
- * description: Allow your users to upload avatars when the signup for your site.
+ * Description: Allow your users to upload avatars when they signup for your site.
  */
 
 class BP_Signup_Avatar_Helper{
