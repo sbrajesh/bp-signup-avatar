@@ -3,7 +3,7 @@ Contributors: buddydev, sbrajesh, anusharma
 Tags: buddypress, user, signup avatar
 Requires at least: BuddyPress 1.5
 Tested up to: BuddyPress 1.8.1
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,9 @@ No, It needs you to have BuddyPress Installed and activated
 3. This shows success message screenshot-3.png
 
 == Changelog ==
+
+= 1.0.1 =
+* Updated to support 
 
 = 1.0 =
 * Initial release for BuddyPress 1.5+
