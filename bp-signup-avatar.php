@@ -20,7 +20,7 @@ class BP_Signup_Avatar_Helper{
         
         add_action( 'bp_after_registration_confirmed', array( $this, 'show_form' ) );
        // add_action( 'bp_complete_signup',              array( $this, 'init_avatar_admin_step' ) );       
-        add_action( 'bp_screens',                      array( $this, 'handle_avatar_upload_crop' ), 9 );
+        add_action( 'bp_core_screen_signup',                      array( $this, 'handle_avatar_upload_crop' ), 9 );
         
         //load text domain
         add_action ( 'bp_loaded', array( $this, 'load_textdomain' ), 2 );
