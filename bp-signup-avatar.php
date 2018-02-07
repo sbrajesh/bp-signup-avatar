@@ -25,6 +25,8 @@ class BP_Signup_Avatar_Helper {
 		// add_action( 'bp_complete_signup',              array( $this, 'init_avatar_admin_step' ) );       
 		add_action( 'bp_core_screen_signup',	array( $this, 'handle_avatar_upload_crop' ), 9 );
 
+        add_action( 'bp_core_activated_user',   array( $this, 'move_signup_avatar' ),10, 3 );
+        
 		//load text domain
 		add_action ( 'bp_loaded', array( $this, 'load_textdomain' ), 2 );
     }
@@ -191,17 +193,99 @@ class BP_Signup_Avatar_Helper {
 				/* Reset the avatar step so we can show the upload form again if needed */
 				$bp->signup->step =        'completed-confirmation';
 				$bp->avatar_admin->step =  'upload-image';
+                
+                $crop_args = array( 
+                    'original_file' => $_POST['image_src'], 
+                    'crop_x' => $_POST['x'], 
+                    'crop_y' => $_POST['y'], 
+                    'crop_w' => $_POST['w'], 
+                    'crop_h' => $_POST['h'],
+                    'object' => 'user',
+                    'item_id' => 'signups/' . $_POST['signup_avatar_dir'], 
+                    'avatar_dir' => 'avatars',
+                );
+                
+                include_once __DIR__ . '/class-bp-attachment-signup-avatar.php';
+                $obj = new \BP_Attachment_Signup_Avatar();
+                
+                $cropped_images = $obj->crop( $crop_args );
 
-				if ( ! bp_core_avatar_handle_crop( array( 'original_file' => $_POST['image_src'], 'crop_x' => $_POST['x'], 'crop_y' => $_POST['y'], 'crop_w' => $_POST['w'], 'crop_h' => $_POST['h'] ) ) )
-						bp_core_add_message( __( 'There was a problem cropping your avatar, please try uploading it again', 'bp-signup-avatar' ), 'error' );
-				else
-						bp_core_add_message( __( 'Your new avatar was uploaded successfully', 'bp-signup-avatar' ) );
+                if ( ! $cropped_images ){
+                    bp_core_add_message( __( 'There was a problem cropping your avatar, please try uploading it again', 'bp-signup-avatar' ), 'error' );
+                } else {
+                    $this->update_signup_avatar_info();
+                    bp_core_add_message( __( 'Your new avatar was uploaded successfully', 'bp-signup-avatar' ) );
+                }
 		}
     
 		bp_core_load_template( 'registration/register' );
     
     }
-	
+    
+    /**
+     * Since, during signup, the avatar is not uploaded in avatar/user_id directory, 
+     * save the uploaded avatar info in user meta, to be used later.
+     * 
+     * @global type \wpdb
+     * @return type void
+     */
+    public function update_signup_avatar_info () {
+        $user_login = $_POST[ 'signup_username' ];
+
+        if ( empty( $user_login ) )
+            return;
+
+        $signups = \BP_Signup::get( array ( 'user_login' => $user_login ) );
+        $signups = $signups[ 'signups' ];
+        if ( empty( $signups ) )
+            return;
+
+        $signup = array_pop( $signups );
+        $meta = $signup->meta;
+        $meta[ 'avatar_folder' ] = $_POST[ 'signup_avatar_dir' ];
+
+        global $wpdb;
+
+        $wpdb->update(
+            buddypress()->members->table_name_signups, array (
+                'meta' => maybe_serialize( $meta ),
+            ), 
+            array (
+                'signup_id' => $signup->signup_id,
+            ), 
+            array (
+                '%s',
+            ), 
+            array (
+                '%s',
+            )
+        );
+    }
+
+    /**
+     * Move the uploaded avatar from signups/xxxxxxx to avatars/user_id folder.
+     * 
+     * @param int $user_id
+     * @param string $key
+     * @param array $user
+     * @return void
+     */
+    public function move_signup_avatar ( $user_id, $key, $user ) {
+        $signup_folder_name = isset( $user[ 'meta' ][ 'avatar_folder' ] ) ? $user[ 'meta' ][ 'avatar_folder' ] : '';
+        if ( !$signup_folder_name ) {
+            return false;
+        }
+
+        //move cropped images from ../uploads/avatars/signups/$signup_folder_name to ../uploads/avatars/$user_id 
+        $upload_dir = bp_upload_dir();
+        $path_to_avatars_folder = $upload_dir[ 'basedir' ] . '/avatars';
+
+        $from = $path_to_avatars_folder . '/signups/' . $signup_folder_name;
+        $to = $path_to_avatars_folder . '/' . $user_id;
+
+        rename( $from, $to );
+    }
+
     public function add_jquery_cropper() {
 		
         wp_enqueue_style( 'jcrop' );
