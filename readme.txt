@@ -1,9 +1,9 @@
 === BuddyPress Signup Avatar ===
 Contributors: buddydev, sbrajesh, anusharma
 Tags: buddypress, user, signup avatar
-Requires at least: BuddyPress 1.5
-Tested up to: BuddyPress 1.8.1
-Stable tag: 1.0.1
+Requires at least: 4.5
+Tested up to: 4.9.8
+Stable tag: 1.0.3
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,6 +40,10 @@ No, It needs you to have BuddyPress Installed and activated
 
 == Changelog ==
 
+
+= 1.0.3 =
+* BP 2.5+ compatibility
+
 = 1.0.1 =
 * Updated to support 
 
@@ -47,4 +51,4 @@ No, It needs you to have BuddyPress Installed and activated
 * Initial release for BuddyPress 1.5+
 
 == Other Notes ==
- Please leave a comment on [BuddyDev](http://buddydev.com/)
+ Please leave a comment on [BuddyDev](https://buddydev.com/)
