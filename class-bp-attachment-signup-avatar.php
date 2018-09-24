@@ -1,6 +1,8 @@
 <?php
 defined( 'ABSPATH' ) || exit;
-
+/**
+ * Contributed by Chandan Chaudhary(@ckchaudhary)
+ */
 if( class_exists( '\BP_Attachment' ) ){
     /**
      * This is a copy of class BP_Attachment_Avatar
