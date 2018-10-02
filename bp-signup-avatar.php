@@ -102,8 +102,8 @@ class BP_Signup_Avatar_Helper {
                 <input type="hidden" name="image_src" id="image_src" value="<?php bp_avatar_to_crop_src(); ?>"/>
                 <input type="hidden" id="x" name="x"/>
                 <input type="hidden" id="y" name="y"/>
-                <input type="hidden" id="w" name="w"/>
-                <input type="hidden" id="h" name="h"/>
+                <input type="hidden" id="w" name="width"/>
+                <input type="hidden" id="h" name="height"/>
 
 				<?php wp_nonce_field( 'bp_avatar_cropstore' ); ?>
 
@@ -204,8 +204,8 @@ class BP_Signup_Avatar_Helper {
 				'original_file' => $_POST['image_src'],
 				'crop_x'        => $_POST['x'],
 				'crop_y'        => $_POST['y'],
-				'crop_w'        => $_POST['w'],
-				'crop_h'        => $_POST['h'],
+				'crop_w'        => $_POST['width'],
+				'crop_h'        => $_POST['height'],
 				'object'        => 'user',
 				'item_id'       => 'signups/' . $_POST['signup_avatar_dir'],
 				'avatar_dir'    => 'avatars',
