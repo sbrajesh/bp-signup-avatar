@@ -2,7 +2,7 @@
 /**
  * Plugin Name: BuddyPress Signup Avatar
  * Plugin URI: https://buddydev.com/plugins/bp-signup-avatar/
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: Brajesh Singh
  * Author URI: https://buddydev.com/
  * License: GPL
