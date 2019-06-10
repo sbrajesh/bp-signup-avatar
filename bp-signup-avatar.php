@@ -169,7 +169,6 @@ class BP_Signup_Avatar_Helper {
 
 			$signup = array_pop( $signups );
 
-
 			$key = $signup->activation_key;
 
 			if ( empty( $key ) ) {
@@ -284,6 +283,7 @@ class BP_Signup_Avatar_Helper {
 
 		//move cropped images from ../uploads/avatars/signups/$signup_folder_name to ../uploads/avatars/$user_id
 		$upload_dir             = bp_upload_dir();
+
 		$path_to_avatars_folder = $upload_dir['basedir'] . '/avatars';
 
 		$from = $path_to_avatars_folder . '/signups/' . $signup_folder_name;
