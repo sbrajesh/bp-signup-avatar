@@ -2,7 +2,7 @@
 /**
  * Plugin Name: BuddyPress Signup Avatar
  * Plugin URI: https://buddydev.com/plugins/bp-signup-avatar/
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: Brajesh Singh
  * Author URI: https://buddydev.com/
  * License: GPL
@@ -61,7 +61,7 @@ class BP_Signup_Avatar_Helper {
 	 * Show upload form.
 	 */
 	public function show_form() {
-		?>
+	    ?>
         <div id="signup-avatar-wrapper">
 			<?php if ( 'upload-image' === bp_get_avatar_admin_step() ) : ?>
                 <h4><?php _e( 'Your Current Avatar', 'bp-signup-avatar' ); ?></h4>
