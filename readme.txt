@@ -3,7 +3,7 @@ Contributors: buddydev, sbrajesh, anusharma
 Tags: buddypress, user, signup avatar
 Requires at least: 4.5
 Tested up to: 4.9.8
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,9 @@ No, It needs you to have BuddyPress Installed and activated
 3. This shows success message screenshot-3.png
 
 == Changelog ==
+= 1.0.5 =
+* fix issue with BP_ENABLE_MULTIBLOG case
+
 = 1.0.4 =
 * Use height and width as name instead of w and h, w causes issue
 
