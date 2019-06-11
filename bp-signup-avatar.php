@@ -13,7 +13,7 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Main Class.
+ * BP_Signup_Avatar_Helper Class.
  */
 class BP_Signup_Avatar_Helper {
 
@@ -28,10 +28,8 @@ class BP_Signup_Avatar_Helper {
 	 * BP_Signup_Avatar_Helper constructor.
 	 */
 	private function __construct() {
-
 		add_action( 'bp_after_registration_confirmed', array( $this, 'show_form' ) );
 		add_action( 'bp_core_screen_signup', array( $this, 'handle_avatar_upload_crop' ), 9 );
-
 		add_action( 'bp_core_activated_user', array( $this, 'move_signup_avatar' ), 10, 3 );
 
 		// load translations.
@@ -116,7 +114,6 @@ class BP_Signup_Avatar_Helper {
 	 * Handle Upload & cropping.
 	 */
 	public function handle_avatar_upload_crop() {
-
 		$bp = buddypress();
 
 		if ( ! isset( $bp->signup->avatar_dir ) ) {
@@ -188,7 +185,8 @@ class BP_Signup_Avatar_Helper {
 
 		/* If the image cropping is done, crop the image and save a full/thumb version */
 		if ( isset( $_POST['avatar-crop-submit'] ) ) {
-			if ( ! isset( $bp->signup->avatar_dir ) ) {
+
+		    if ( ! isset( $bp->signup->avatar_dir ) ) {
 				$bp->signup->avatar_dir = $_POST['signup_avatar_dir'];
 			}
 
@@ -284,6 +282,10 @@ class BP_Signup_Avatar_Helper {
 		//move cropped images from ../uploads/avatars/signups/$signup_folder_name to ../uploads/avatars/$user_id
 		$upload_dir             = bp_upload_dir();
 
+		if ( defined( 'BP_AVATAR_UPLOAD_PATH' ) ) {
+			$upload_dir['basedir'] = BP_AVATAR_UPLOAD_PATH;
+        }
+
 		$path_to_avatars_folder = $upload_dir['basedir'] . '/avatars';
 
 		$from = $path_to_avatars_folder . '/signups/' . $signup_folder_name;
@@ -292,10 +294,13 @@ class BP_Signup_Avatar_Helper {
 		rename( $from, $to );
 	}
 
+	/**
+	 * Add jquery cropper
+	 */
 	public function add_jquery_cropper() {
-
-		wp_enqueue_style( 'jcrop' );
+	    wp_enqueue_style( 'jcrop' );
 		wp_enqueue_script( 'jcrop', array( 'jquery' ) );
+
 		add_action( 'wp_head', 'bp_core_add_cropper_inline_js' );
 		add_action( 'wp_head', 'bp_core_add_cropper_inline_css' );
 	}
